@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Request xsi:schemaLocation="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 http://docs.oasis-open.org/xacml/3.0/xacml-core-v3-schema-wd-17.xsd" ReturnPolicyIdList="false" CombinedDecision="false"
+  xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+    <Attribute IncludeInResult="false" AttributeId="device-type">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">temperature_sensor</AttributeValue>
+    </Attribute>
+    <Attribute IncludeInResult="false" AttributeId="device-model">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">XS550</AttributeValue>
+    </Attribute>
+  </Attributes>
+  <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+    <Attribute IncludeInResult="false" AttributeId="topic-channel">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">factory/assembly-line-01/z1/temperature/battery-level</AttributeValue>
+    </Attribute>
+  </Attributes>
+  <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+    <Attribute IncludeInResult="false" AttributeId="action-type">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">publish</AttributeValue>
+    </Attribute>
+  </Attributes>
+  <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment">
+    <Attribute IncludeInResult="false" AttributeId="environment-location">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">/factory/assembly-line-01/z1/</AttributeValue>
+    </Attribute>
+    <Attribute IncludeInResult="false" AttributeId="ip-address">
+      <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">123.1.1.1</AttributeValue>
+    </Attribute>
+  </Attributes>
+</Request>

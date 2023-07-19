@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" Version="1.0" PolicySetId="duty-free-example" PolicyCombiningAlgId="urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:first-applicable">
+  <Target />
+  <PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" Version="1.0" PolicySetId="duty-free-example.01" PolicyCombiningAlgId="urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:first-applicable">
+    <Description>This policy set contains a list of access rules for duty free collection service on A330 aircraft</Description>
+    <Target>
+      <AnyOf>
+        <AllOf>
+          <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">A330</AttributeValue>
+            <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" MustBePresent="false" AttributeId="aircraft-model" DataType="http://www.w3.org/2001/XMLSchema#string" />
+          </Match>
+        </AllOf>
+      </AnyOf>
+    </Target>
+    <Policy Version="1.0" PolicyId="duty-free-example.01.01" RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit">
+      <Description>Policiy for viewing the catalogue for Airline AAA</Description>
+      <Target>
+        <AnyOf>
+          <AllOf>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+              <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">AAA</AttributeValue>
+              <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" MustBePresent="false" AttributeId="icao-airline-designator" DataType="http://www.w3.org/2001/XMLSchema#string" />
+            </Match>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+              <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">get</AttributeValue>
+              <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" MustBePresent="false" AttributeId="action-type" DataType="http://www.w3.org/2001/XMLSchema#string" />
+            </Match>
+          </AllOf>
+        </AnyOf>
+        <AnyOf>
+          <AllOf>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:regexp-string-match">
+              <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">/catalogue</AttributeValue>
+              <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" MustBePresent="false" AttributeId="catalogue" DataType="http://www.w3.org/2001/XMLSchema#string" />
+            </Match>
+          </AllOf>
+          <AllOf>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+              <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">/catalogue/#type</AttributeValue>
+              <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" MustBePresent="false" AttributeId="catalogue-type" DataType="http://www.w3.org/2001/XMLSchema#string" />
+            </Match>
+          </AllOf>
+        </AnyOf>
+      </Target>
+      <Rule RuleId="duty-free-example.01.01.r.1" Effect="Permit">
+        <Description>Passengers whose flights arrive at ORD airport are allowed to view at anytime</Description>
+        <Target>
+          <AnyOf>
+            <AllOf>
+              <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">ORD</AttributeValue>
+                <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" MustBePresent="false" AttributeId="icao-airport-designator" DataType="http://www.w3.org/2001/XMLSchema#string" />
+              </Match>
+            </AllOf>
+          </AnyOf>
+        </Target>
+      </Rule>
+      <Rule RuleId="duty-free-example.01.01.r.1" Effect="permit">
+        <Description>Passengers whose flights arrive at DUB airport are only allowed to view the catalogue between 06:15 and 22:15</Description>
+        <Target>
+          <AnyOf>
+            <AllOf>
+              <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">DUB</AttributeValue>
+                <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" MustBePresent="false" AttributeId="icao-airport-designator" DataType="http://www.w3.org/2001/XMLSchema#string" />
+              </Match>
+            </AllOf>
+          </AnyOf>
+        </Target>
+        <Condition>
+          <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-greater-than-or-equal">
+              <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
+                <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:environment:current-time" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment" DataType="http://www.w3.org/2001/XMLSchema#time" MustBePresent="true" />
+              </Apply>
+              <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">06:15:00</AttributeValue>
+            </Apply>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-less-than-or-equal">
+              <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
+                <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:environment:current-time" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment" DataType="http://www.w3.org/2001/XMLSchema#time" MustBePresent="true" />
+              </Apply>
+              <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">22:15:00</AttributeValue>
+            </Apply>
+          </Apply>
+        </Condition>
+      </Rule>
+    </Policy>
+    <Policy Version="1.0" PolicyId="duty-free-example.01.02" RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit">
+      <Description>Policiy for viewing the catalogue for Airline AAA</Description>
+      <Target>
+        <AnyOf>
+          <AllOf>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+              <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">BBB</AttributeValue>
+              <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" MustBePresent="false" AttributeId="icao-airline-designator" DataType="http://www.w3.org/2001/XMLSchema#string" />
+            </Match>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+              <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">get</AttributeValue>
+              <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" MustBePresent="false" AttributeId="action-type" DataType="http://www.w3.org/2001/XMLSchema#string" />
+            </Match>
+          </AllOf>
+        </AnyOf>
+        <AnyOf>
+          <AllOf>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:regexp-string-match">
+              <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">/catalogue</AttributeValue>
+              <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" MustBePresent="false" AttributeId="catalogue" DataType="http://www.w3.org/2001/XMLSchema#string" />
+            </Match>
+          </AllOf>
+          <AllOf>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+              <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">/catalogue/#type</AttributeValue>
+              <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" MustBePresent="false" AttributeId="catalogue-type" DataType="http://www.w3.org/2001/XMLSchema#string" />
+            </Match>
+          </AllOf>
+        </AnyOf>
+      </Target>
+      <Rule RuleId="duty-free-example.01.01.r.1" Effect="Permit">
+        <Description>Passengers whose flights arrive at ORD airport are allowed to view at anytime</Description>
+        <Target>
+          <AnyOf>
+            <AllOf>
+              <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">ORD</AttributeValue>
+                <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" MustBePresent="false" AttributeId="icao-airport-designator" DataType="http://www.w3.org/2001/XMLSchema#string" />
+              </Match>
+            </AllOf>
+          </AnyOf>
+        </Target>
+      </Rule>
+      <Rule RuleId="duty-free-example.01.01.r.1" Effect="permit">
+        <Description>Passengers whose flights arrive at DUB airport are only allowed to view the catalogue between 06:15 and 22:15</Description>
+        <Target>
+          <AnyOf>
+            <AllOf>
+              <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">DUB</AttributeValue>
+                <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" MustBePresent="false" AttributeId="icao-airport-designator" DataType="http://www.w3.org/2001/XMLSchema#string" />
+              </Match>
+            </AllOf>
+          </AnyOf>
+        </Target>
+        <Condition>
+          <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-greater-than-or-equal">
+              <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
+                <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:environment:current-time" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment" DataType="http://www.w3.org/2001/XMLSchema#time" MustBePresent="true" />
+              </Apply>
+              <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">08:15:00</AttributeValue>
+            </Apply>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-less-than-or-equal">
+              <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
+                <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:environment:current-time" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment" DataType="http://www.w3.org/2001/XMLSchema#time" MustBePresent="true" />
+              </Apply>
+              <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">20:15:00</AttributeValue>
+            </Apply>
+          </Apply>
+        </Condition>
+      </Rule>
+    </Policy>
+  </PolicySet>
+</PolicySet>

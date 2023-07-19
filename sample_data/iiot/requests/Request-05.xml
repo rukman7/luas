@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Request xsi:schemaLocation="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17 http://docs.oasis-open.org/xacml/3.0/xacml-core-v3-schema-wd-17.xsd" ReturnPolicyIdList="false" CombinedDecision="false"
+    xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+        <Attribute IncludeInResult="true" AttributeId="subject-role">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">security-admin</AttributeValue>
+        </Attribute>
+    </Attributes>
+    <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+        <Attribute IncludeInResult="false" AttributeId="device-type">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">motion_sensor</AttributeValue>
+        </Attribute>
+        <Attribute IncludeInResult="false" AttributeId="device-model">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">RTS10</AttributeValue>
+        </Attribute>
+    </Attributes>
+    <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+        <Attribute IncludeInResult="false" AttributeId="action-type">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">switch-off</AttributeValue>
+        </Attribute>
+    </Attributes>
+    <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment">
+        <Attribute IncludeInResult="false" AttributeId="urn:oasis:names:tc:xacml:1.0:environment:current-time">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">19:11:00+01:00</AttributeValue>
+        </Attribute>
+        <Attribute IncludeInResult="false" AttributeId="environment-location">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">/factory/assembly-line-01/z1/</AttributeValue>
+        </Attribute>
+        <Attribute IncludeInResult="false" AttributeId="ip-address">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">111.1.1.1</AttributeValue>
+        </Attribute>
+    </Attributes>
+</Request>

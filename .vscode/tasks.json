@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "type": "shell",
+  "presentation" : { "reveal": "always" },
+  "tasks": [
+    {
+      "label": "install",
+      "command": "npm install",
+    },
+    {
+      "label": "update",
+      "command": "npm update",
+    },
+    {
+      "label": "test",
+      "command": "npm run test",
+    }
+  ]
+}

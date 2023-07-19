@@ -1,0 +1,22 @@
+{
+  "name": "luas",
+  "version": "1.2.2",
+  "description": "Node.js Policy Decision Point",
+  "main": "index.js",
+  "scripts": {
+    "nvm": "~/.nvm/nvm-exec which node | xargs -J % ln -sf % ./.nvm-node && chmod +x ./.nvm-node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/fanzhang916/luas"
+  },
+  "keywords": [
+    "PDP"
+  ],
+  "author": "Fan Zhang <fanzhang0916@gmail.com>",
+  "license": "BSD-2-Clause-FreeBSD",
+  "dependencies": {
+    "libxmljs": "latest",
+    "moment": "latest"
+  }
+}
